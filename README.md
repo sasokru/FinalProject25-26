@@ -1,6 +1,6 @@
 # FinalProject25-26
 This is the documentation of my final project "drip.py" in the winter semester of 2025/26.
-## It is an Arduino IV Drip Monitoring Prototype.
+## drip.py / Arduino IV Drip Monitoring Prototype.
 
 This project explores a low-cost hardware approach to monitoring the drip rate of an IV infusion.
 
