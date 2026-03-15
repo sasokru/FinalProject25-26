@@ -10,7 +10,7 @@ This folder contains visual material for the infusion drip monitoring prototype.
 - `photos/`  
   contains photos of the hardware setup, build process, and final prototype
 
-- `sketches_and_schematics/`  
+- `sketches_and_schematics`  
   contains early handwritten notes and concept sketches, as well as the
   final breadboard schematic
 
