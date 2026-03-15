@@ -3,8 +3,8 @@
 This folder contains the Arduino code for the infusion drip monitoring prototype.
 
 ## Structure
-- `drip_monitor_final/` contains the final integrated Arduino sketch used for the prototype
-- `old_versions/` can contain earlier development stages if needed
+- `final_code.ino/` contains the final integrated Arduino sketch used for the prototype
+-  The other two files contain earlier development stages that were crucial in the process.
 
 ## Main Functions of the Final Code
 The final Arduino code:
