@@ -13,6 +13,7 @@ The project is intended as a small exploration of how simple embedded systems an
 **Tech stack**
 - Arduino
 - Python
+- C++
 - MATLAB
 
 **Status**
