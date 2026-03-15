@@ -2,7 +2,6 @@
 This is the documentation of my final project "drip.py" in the winter semester of 2025/26.
 ## drip.py / Arduino IV Drip Monitoring Prototype.
 
-# Infusion Drip Monitoring Prototype 
 This project explores an Arduino-based prototype for monitoring infusion drip activity in a simple experimental setup. The system detects drop-related signals, estimates flow behaviour, and communicates the current state through visual output.
 
 The project was developed in the context of the Technical Basics course at Leuphana University, but it also reflects a broader personal interest: connecting healthcare-related problems with technical prototyping and digital health thinking.
