@@ -58,6 +58,9 @@ This project was created for educational purposes. It is an experimental prototy
 
 ## Author
 **Sarah Kruschinski**  
+
 Business Informatics
+
 Digital Media / Business Administration  
+
 Interest areas: digital health, healthcare process optimisation, physical computing
