@@ -1,50 +1,77 @@
 # Code Development
 
+The code for this project developed step by step together with the hardware. I did not write one finished version from the start. Instead, the code changed during testing whenever something in the setup needed to be adjusted.
 
-The code for this project developed step by step together with the hardware. I did not write one final version from the start. Instead, the code changed whenever I tested the setup and noticed that something was not working properly yet.
+This was especially true because the sensor behaviour depended a lot on the physical setup. So coding and hardware testing were closely connected throughout the project.
 
-This was especially true because the behaviour of the sensor depended a lot on the physical arrangement of the setup. So the code and the hardware development were closely connected.
+## Early Development
+At the beginning, the main question was simply whether the sensor could detect anything useful at all. The first code versions were therefore mainly about basic reading and simple output.
 
-## Early Stage
-In the beginning, the code was mainly about getting a basic signal from the sensor and checking whether the system was reacting at all. At that stage, the focus was not yet on a polished final logic, but on simple testing:
-- is the sensor giving any usable signal?
-- can the Arduino read it?
-- can I trigger an output from it?
+Once that worked at least partly, I started expanding the system with LED feedback, display output, and a clearer flow-state logic.
 
-Once that worked to some degree, I started adding more elements like the LED behaviour and display output.
+## What the final code does
+The final code combines several functions in one sketch:
+- reading the sensor signal
+- counting drops
+- avoiding multiple counts for the same drop through a minimum time gap
+- calculating flow values
+- smoothing the current flow value
+- updating the RGB LED based on the flow state
+- showing the current information on the OLED display
+- printing values to the Serial Monitor
 
-## Development Steps
-The code changed over several stages:
+## Sensor Logic
+In the final version, the sensor pin is set to `INPUT_PULLUP`. A drop is counted when the signal changes from inactive to active, with `LOW` being treated as the active state.
 
-1. basic sensor reading  
-2. first drop detection logic  
-3. adding visual feedback  
-4. connecting the OLED display  
-5. adjusting pin assignments  
-6. changing the status logic  
-7. removing the buzzer from the final version  
-8. combining everything into one final sketch  
+This matters because the code does not just count every moment where the signal is active. It only counts a change from inactive to active, which helps avoid repeated counting of the same drop.
 
-Not every version worked well. Some changes were made because the previous version gave false detections or unclear output.
+To reduce false multiple counts, the code also uses a minimum gap of 40 milliseconds between detected drops.
 
-## What made coding difficult
-The hard part was not writing syntax on its own. The harder part was deciding how the incoming signal should be interpreted. In theory, the idea sounded simple: detect drop activity and classify the flow state. In practice, the sensor did not always behave in a perfectly stable way.
+## Measuring and Calculation
+The code evaluates the signal once per second. For each interval, it calculates:
+- drops detected in that interval
+- flow in mL per second
+- flow in mL per minute
+- total estimated volume in mL
 
-That meant the code had to be adjusted several times so that the system behaviour made more sense during testing.
+The conversion is based on a drop factor of 20 drops per mL, which represents a typical macrodrip setup.
 
-## Structure of the final code
-The final code includes:
-- reading the sensor input
-- interpreting the signal in relation to flow activity
-- showing the current state through the RGB LED
-- displaying information on the OLED screen
+## Smoothing
+The final code also includes simple smoothing using an exponential moving average. This makes the displayed flow value less jumpy and easier to interpret.
 
-Compared to the initial idea, the final version is more reduced and focused on making the prototype understandable and demonstrable.
+That part is useful because the raw signal can change quickly and is not always perfectly stable.
 
-## Why the code changed over time
-A lot of the code changes were caused by testing the real setup. The project showed that in physical computing, code often has to react to what the hardware actually does, not just what it was supposed to do in theory.
+## Flow States
+The flow state is divided into three categories:
+- below 0.67 mL/min = low or no flow
+- between 0.67 and 2.00 mL/min = normal flow
+- above 2.00 mL/min = fast flow
 
-So the code development was part of the general iteration process, not a separate clean phase.
+These states are shown through the RGB LED and also displayed as text on the OLED screen.
 
-## File Structure
-The final version of the program is stored in the main Arduino file of this repository.
+## Display Output
+The display shows:
+- project title
+- current state
+- total number of drops
+- total estimated volume
+- current flow in mL/s
+- filtered flow in mL/min
+
+This made the prototype easier to understand during testing because the output was not limited to the LED alone.
+
+## Code Changes During the Project
+The code changed several times over the course of the project. These changes included:
+- pin changes
+- integrating the display
+- revising the state logic
+- changing the LED behaviour
+- removing the buzzer from the final version
+- improving counting so that drops were not simply counted continuously
+
+A lot of these changes happened because the first versions did not behave reliably enough in the real setup.
+
+## What I learned from the code development
+The main lesson was that code in a physical computing project is not developed in isolation. It has to react to what the real setup actually does. In this project, coding was therefore closely tied to testing, debugging, and simplifying.
+
+That is also why the final code is more focused than the earliest idea. Some parts were reduced or removed so that the final prototype would be clearer and more stable.
