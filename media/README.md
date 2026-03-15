@@ -4,7 +4,7 @@ This folder contains visual material for the infusion drip monitoring prototype.
 
 ## Structure
 
-- `demo_video/`  
+- `Final_demo.mov`  
   contains the final demonstration video of the prototype
 
 - `photos/`  
