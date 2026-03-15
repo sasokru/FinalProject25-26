@@ -41,7 +41,7 @@ The final prototype uses an IR sensor for detection, an RGB LED for quick visual
   photos, sketches, schematics, plots, and the demo video
 
 ### MATLAB
-- [`matlab/`](matlab/)  
+- [`Mathlab/`](Mathlab/README.md)  
   material related to later data analysis and filtering
 
 
