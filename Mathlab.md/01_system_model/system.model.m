@@ -1,51 +1,38 @@
-%% System model for drip monitoring (simplified)
+%% Simple system model for drip rate estimation
 clear; clc; close all;
 
 % Idea:
-% I am not modeling the full physical infusion system.
-% Instead, I use a simplified dynamic system to describe how
-% an underlying flow evolves over time and how it is measured.
+% The true drip rate changes slowly over time.
+% The measurement is noisy.
 
-% State-space representation
+% Simulated measurement (based on your plot)
+z = [28 31 30 35 29 27 40 30 29 31 30];
 
-A = [-1 1;
-      0 -1];
+N = length(z);
 
-B = [0;
-     1];
+% Model:
+% x(k+1) = x(k) + w
+% z(k)   = x(k) + v
 
-C = [0 1];
+% Initialize estimate
+x_est = zeros(1,N);
+x_est(1) = z(1);
 
-D = 0;
+% Simple smoothing (model-based thinking)
+for k = 2:N
+    % prediction (no change assumed)
+    x_pred = x_est(k-1);
 
-% Create state-space system
-sys = ss(A, B, C, D);
+    % update (simple correction toward measurement)
+    x_est(k) = 0.8 * x_pred + 0.2 * z(k);
+end
 
-% Check observability
-OB = obsv(A, C);
-obs_rank = rank(OB);
-
-disp('Observability matrix:');
-disp(OB);
-
-disp(['Rank: ', num2str(obs_rank)]);
-
-% Simple simulation
-t = 0:0.01:5;
-u = ones(size(t));   % constant input (steady flow)
-
-[y, t, x] = lsim(sys, u, t);
-
-% Plot results
+% Plot
 figure;
-plot(t, x(:,1), t, x(:,2));
-legend('state x1', 'state x2');
-xlabel('Time (s)');
-ylabel('States');
-title('System states over time');
-
-figure;
-plot(t, y);
-xlabel('Time (s)');
-ylabel('Measured output');
-title('Measured output (what the sensor sees)');
+plot(1:N, z, 'r-o', 'DisplayName','Messung');
+hold on;
+plot(1:N, x_est, 'b-', 'LineWidth',2, 'DisplayName','Schätzung');
+legend;
+xlabel('Zeitindex');
+ylabel('Tropfrate (Drops/min)');
+title('Measurement vs. Estimated drip rate');
