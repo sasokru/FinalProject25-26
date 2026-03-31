@@ -1,13 +1,13 @@
 ## System model
 
-This is a simplified representation of the drip process.
+Looking at the measurements, the drip rate does not realistically jump as much as the raw signal suggests.
 
-I am not trying to model the actual physics of infusion, but rather to describe the behavior of the system in a way that allows state estimation later on.
+So instead of interpreting every value directly, I assume that:
+- the underlying system changes slowly
+- sudden deviations are mostly noise
 
-The idea is that there is an underlying continuous process (flow), but the sensor only gives indirect and sometimes unstable measurements.
+Based on that, I model the system as a simple process where the current state depends on the previous one, plus small variations.
 
-So the model separates:
-- internal system states
-- measured output
+The measurement is treated as a noisy observation of this state.
 
-This is the basis for the observer and later the Kalman filter.
+This is the basis for later applying a Kalman filter.
